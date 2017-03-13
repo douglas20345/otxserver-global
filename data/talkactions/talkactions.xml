@@ -65,7 +65,8 @@
 	<!-- player talkactions -->
 	<talkaction words="!buyhouse" script="buyhouse.lua" />
 	<talkaction words="!leavehouse" script="leavehouse.lua" />
-        
+   <talkaction words="!sellhouse" separator=" " script="sellhouse.lua" />
+     
 
 	<talkaction words="!uptime" script="uptime.lua" />
 

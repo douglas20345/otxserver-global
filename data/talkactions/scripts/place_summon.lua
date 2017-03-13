@@ -10,7 +10,10 @@ function onSay(player, words, param)
 	local position = player:getPosition()
 	local monster = Game.createMonster(param, position)
 	if monster ~= nil then
-		monster:setMaster(player)
+	if monster:getType():isRewardBoss() then
+ 			monster:setReward(true)
+ 		end
+		player:addSummon(monster)
 		position:sendMagicEffect(CONST_ME_MAGIC_RED)
 	else
 		player:sendCancelMessage("There is not enough room.")

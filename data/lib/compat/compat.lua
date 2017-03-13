@@ -538,19 +538,19 @@ function doSummonCreature(name, pos, ...)
 	local m = Game.createMonster(name, pos, ...) return m ~= nil and m:getId() or false
 end
 function doConvinceCreature(cid, target)
-	local creature = Creature(cid)
-	if creature == nil then
-		return false
-	end
-
-	local targetCreature = Creature(target)
-	if targetCreature == nil then
-		return false
-	end
-
-	targetCreature:setMaster(creature)
-	return true
-end
+ 	local creature = Creature(cid)
+ 	if creature == nil then
+ 		return false
+ 	end
+ 
+ 	local targetCreature = Creature(target)
+ 	if targetCreature == nil then
+ 		return false
+ 	end
+ 
+	creature:addSummon(targetCreature)
+ 	return true
+ end
 
 function getTownId(townName) local t = Town(townName) return t ~= nil and t:getId() or false end
 function getTownName(townId) local t = Town(townId) return t ~= nil and t:getName() or false end

@@ -1,6 +1,6 @@
 function Creature.getClosestFreePosition(self, position, extended)
 	local usePosition = Position(position)
-	local tiles = { usePosition:getTile() }
+	local tiles = { Tile(usePosition) }
 	local length = extended and 2 or 1
 
 	local tile
@@ -10,7 +10,7 @@ function Creature.getClosestFreePosition(self, position, extended)
 				usePosition.x = position.x + x
 				usePosition.y = position.y + y
 
-				tile = usePosition:getTile()
+				tile = Tile(usePosition)
 				if tile then
 					tiles[#tiles + 1] = tile
 				end
@@ -20,15 +20,11 @@ function Creature.getClosestFreePosition(self, position, extended)
 
 	for i = 1, #tiles do
 		tile = tiles[i]
-		if tile:getCreatureCount() == 0 and not tile:hasProperty(CONST_PROP_BLOCKINGANDNOTMOVEABLE) then
+		if tile:getCreatureCount() == 0 and not tile:hasProperty(CONST_PROP_IMMOVABLEBLOCKSOLID) then
 			return tile:getPosition()
 		end
 	end
 	return Position()
-end
-
-function Creature.getMonster(self)
-	return self:isMonster() and self or nil
 end
 
 function Creature.getPlayer(self)
@@ -85,6 +81,36 @@ function Creature:setItemOutfit(item, time)
 	})
 	condition:setTicks(time)
 	self:addCondition(condition)
+
+	return true
+end
+
+function Creature:addSummon(monster)
+	local summon = Monster(monster)
+	if not summon then
+		return false
+	end
+
+	summon:setTarget(nil)
+	summon:setFollowCreature(nil)
+	summon:setDropLoot(false)
+	summon:setSkillLoss(false)
+	summon:setMaster(self)
+
+	return true
+end
+
+function Creature:removeSummon(monster)
+	local summon = Monster(monster)
+	if not summon or summon:getMaster() ~= self then
+		return false
+	end
+
+	summon:setTarget(nil)
+	summon:setFollowCreature(nil)
+	summon:setDropLoot(true)
+	summon:setSkillLoss(true)
+	summon:setMaster(nil)
 
 	return true
 end
