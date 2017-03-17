@@ -109,6 +109,10 @@ function isNumber(str)
 	return tonumber(str) ~= nil
 end
 
+function Creature.getMonster(self)
+return self:isMonster() and self or nil
+end
+
 function getTibianTime()
 	local worldTime = getWorldTime()
 	local hours = math.floor(worldTime / 60)
