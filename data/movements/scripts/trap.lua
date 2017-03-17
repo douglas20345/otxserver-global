@@ -1,7 +1,7 @@
 local traps = {
 	[1510] = {transformTo = 1511, damage = {-50, -100}},
 	[1513] = {damage = {-50, -100}},
-	[2579] = {transformTo = 2578, damage = {-15, -30}, ignorePlayer = true},
+	[2579] = {transformTo = 2578, damage = {-15, -30}, ignorePlayer = false},
 	[4208] = {transformTo = 4209, damage = {-15, -30}, type = COMBAT_EARTHDAMAGE}
 }
 
@@ -29,10 +29,10 @@ function onStepOut(creature, item, position, fromPosition)
 end
 
 function onRemoveItem(item, tile, position)
-	local thingPos = item:getPosition()
-	if thingPos:getDistance(position) > 0 then
+	local itemPosition = item:getPosition()
+	if itemPosition:getDistance(position) > 0 then
 		item:transform(item.itemid - 1)
-		thingPos:sendMagicEffect(CONST_ME_POFF)
+		itemPosition:sendMagicEffect(CONST_ME_POFF)
 	end
 	return true
 end

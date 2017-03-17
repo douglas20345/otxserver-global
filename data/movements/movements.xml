@@ -353,7 +353,7 @@
 	<movevent event="StepOut" itemid="1511" script="trap.lua" />
 	<movevent event="StepIn" itemid="1513" script="trap.lua" />
 	<movevent event="StepIn" itemid="2579" script="trap.lua" />
-	<movevent event="RemoveItem" itemid="2579" script="trap.lua" />
+	<movevent event="StepOut" itemid="2579" script="trap.lua" />
 	<movevent event="StepIn" itemid="4208" script="trap.lua" />
 	<movevent event="StepOut" itemid="4209" script="trap.lua" />
 
@@ -364,6 +364,7 @@
 	<movevent event="StepIn" fromuid="9056" touid="9068" script="citizen.lua" />
 	<movevent event="StepIn" uniqueid="9240" script="citizen.lua" />
 	<movevent event="StepIn" fromuid="9500" touid="9501" script="citizen.lua" />
+	<movevent event="StepIn" itemid="1397" script="citizen.lua" />
 
 	<!-- Walkback when walking on quest chest -->
 	<movevent event="StepIn" itemid="1738" script="walkback.lua" />
@@ -520,6 +521,8 @@
 	<!-- Swimming -->
 	<movevent event="StepIn" fromid="4620" toid="4625" script="swimming.lua" />
 	<movevent event="StepOut" fromid="4620" toid="4625" script="swimming.lua" />
+	<movevent event="StepIn" fromid="4820" toid="4825" script="swimming.lua" />
+	<movevent event="StepOut" fromid="4820" toid="4825" script="swimming.lua" />
 	<movevent event="StepIn" fromid="5405" toid="5410" script="drowning.lua" />
 	<movevent event="StepOut" fromid="5405" toid="5410" script="drowning.lua" />
 
