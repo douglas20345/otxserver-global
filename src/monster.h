@@ -1,4 +1,4 @@
-/**
+﻿/**
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
@@ -136,6 +136,7 @@ class Monster final : public Creature
 
 		void drainHealth(Creature* attacker, int32_t damage) final;
 		void changeHealth(int32_t healthChange, bool sendHealthChange = true) final;
+		bool hasRecentBattle() const { return lastDamage && (int64_t)OTSYS_TIME() < (lastDamage + 30000); }
 		void onWalk() final;
 		bool getNextStep(Direction& direction, uint32_t& flags) final;
 		void onFollowCreatureComplete(const Creature* creature) final;
@@ -188,6 +189,7 @@ class Monster final : public Creature
 		Spawn* spawn = nullptr;
 
 		int64_t lastMeleeAttack = 0;
+		int64_t lastDamage = 0;
 
 		uint32_t attackTicks = 0;
 		uint32_t targetTicks = 0;

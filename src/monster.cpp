@@ -1,4 +1,4 @@
-/**
+﻿/**
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
@@ -1899,7 +1899,11 @@ void Monster::changeHealth(int32_t healthChange, bool sendHealthChange/* = true*
 {
 	//In case a player with ignore flag set attacks the monster
 	setIdle(false);
-	Creature::changeHealth(healthChange, sendHealthChange);
+	if (!hasRecentBattle())
+	{
+		lastDamage = OTSYS_TIME();
+		updateMapCache();
+	}	Creature::changeHealth(healthChange, sendHealthChange);
 }
 
 bool Monster::challengeCreature(Creature* creature)

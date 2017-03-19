@@ -308,6 +308,26 @@ bool IOMap::parseTileArea(OTB::Loader& loader, const OTB::Node& tileAreaNode, Ma
 						return false;
 					}
 
+			if (Teleport* teleport = item->getTeleport()) {
+				const Position& destPos = teleport->getDestPos();
+				uint64_t teleportPosition = (static_cast<uint64_t>(x) << 24) | (y << 8) | z;
+				uint64_t destinationPosition = (static_cast<uint64_t>(destPos.x) << 24) | (destPos.y << 8) | destPos.z;
+				teleportMap.emplace(teleportPosition, destinationPosition);
+				auto it = teleportMap.find(destinationPosition);
+				if (it != teleportMap.end()) {
+					std::cout << "[Warning - IOMap::loadMap] Teleport in position [x:" << x << ", y : " << y << ", z : " << z << "] is leading to another teleport." << std::endl;
+				}
+				for (auto const& it2 : teleportMap) {
+					if (it2.second == teleportPosition) {
+						uint16_t fx = (it2.first >> 24) & 0xFFFF;
+						uint16_t fy = (it2.first >> 8) & 0xFFFF;
+						uint8_t fz = (it2.first) & 0xFF;
+						std::cout << "[Warning - IOMap::loadMap] Teleport in position [x:" << fx << ", y : " << fy << ", z : " << static_cast<uint16_t>(fz) << "] is leading to another teleport." << std::endl;
+					}
+				}
+
+			}
+
 					if (isHouseTile && item->isMoveable()) {
 						std::cout << "[Warning - IOMap::loadMap] Moveable item with ID: " << item->getID() << ", in house: " << house->getId() << ", at position [x: " << x << ", y: " << y << ", z: " << z << "]." << std::endl;
 						delete item;
@@ -369,30 +389,6 @@ bool IOMap::parseTileArea(OTB::Loader& loader, const OTB::Node& tileAreaNode, Ma
 				setLastErrorString(ss.str());
 				delete item;
 				return false;
-			}
-
-			if (Teleport* teleport = item->getTeleport()) {
-				const Position& destPos = teleport->getDestPos();
-				uint64_t teleportPosition = (static_cast<uint64_t>(x) << 24) | (y << 8) | z;
-				uint64_t destinationPosition = (static_cast<uint64_t>(destPos.x) << 24) | (destPos.y << 8) | destPos.z;
-				teleportMap.emplace(teleportPosition, destinationPosition);
-				auto it = teleportMap.find(destinationPosition);
-				if (it != teleportMap.end()) {
-					std::cout << "[Warning - IOMap::loadMap] Teleport in position [x:" << x << ", y : " << y << ", z : " << z << "] is leading to another teleport." << std::endl;
-					
-				}
-				for (auto const& it2 : teleportMap) {
-					if (it2.second == teleportPosition) {
-						uint16_t fx = (it2.first >> 24) & 0xFFFF;
-						uint16_t fy = (it2.first >> 8) & 0xFFFF;
-						uint8_t fz = (it2.first) & 0xFF;
-						std::cout << "[Warning - IOMap::loadMap] Teleport in position [x:" << fx << ", y : " << fy << ", z : " << static_cast<uint16_t>(fz) << "] is leading to another teleport." << std::endl;
-						
-					}
-					
-				}
-				
-					
 			}
 
 			if (isHouseTile && item->isMoveable()) {

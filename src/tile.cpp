@@ -1,4 +1,4 @@
-/**
+﻿/**
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
@@ -545,7 +545,7 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 					//1) Monster is "strong" enough to handle the damage
 					//2) Monster is already afflicated by this type of condition
 					if (hasBitSet(FLAG_IGNOREFIELDDAMAGE, flags)) {
-						if (!(monster->canPushItems() || monster->hasCondition(Combat::DamageToConditionType(combatType)))) {
+						if (!monster->hasCondition(Combat::DamageToConditionType(combatType)) && (!monster->canPushItems() || !monster->hasRecentBattle())) {
 							return RETURNVALUE_NOTPOSSIBLE;
 						}
 					} else {
