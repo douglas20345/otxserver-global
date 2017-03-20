@@ -108,8 +108,8 @@ function Creature:removeSummon(monster)
 
 	summon:setTarget(nil)
 	summon:setFollowCreature(nil)
-	summon:setDropLoot(true)
-	summon:setSkillLoss(true)
+	summon:setDropLoot(false)
+	summon:setSkillLoss(false)
 	summon:setMaster(nil)
 
 	return true
