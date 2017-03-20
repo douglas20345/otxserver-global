@@ -85,7 +85,7 @@ local function revertCask(position)
 	end
 end
 
-function DestroyItem(player, item, fromPosition, target, toPosition, isHotkey)
+function destroyItem(player, item, fromPosition, target, toPosition, isHotkey)
 	if type(target) ~= "userdata" or not target:isItem() then
 		return false
 	end
